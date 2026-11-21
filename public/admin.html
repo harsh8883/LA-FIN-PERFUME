@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA FIN | Admin Portal - Stocks & Customer Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for modern Excel (.xlsx) file generation -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="admin.css">
+
+</head>
+<body>
+
+    <!-- Admin Security Gateway Overlay (Appears if admin is not authenticated) -->
+    <div id="adminGatewayOverlay" class="admin-gate-overlay" style="display: none;">
+        <div class="admin-gate-card">
+            <div class="admin-gate-header">
+                <div class="admin-gate-icon">👑</div>
+                <h1 class="admin-gate-title">LA FIN<span>™</span></h1>
+                <span class="admin-gate-badge">Admin Security Gateway</span>
+                <p class="admin-gate-desc">Restricted to authorized store administrators. Please authenticate to open the dashboard.</p>
+            </div>
+            <div class="admin-gate-body">
+                <div id="gateAlert" class="gate-alert" style="display: none;"></div>
+
+                <form id="gateLoginForm" class="gate-form">
+                    <div class="gate-group">
+                        <label for="gateAdminEmail">Administrator Email</label>
+                        <input type="email" id="gateAdminEmail" required value="admin@lafin.luxury" autocomplete="username">
+                    </div>
+                    <div class="gate-group">
+                        <label for="gateAdminPassword">Master Password</label>
+                        <div class="gate-pwd-wrap">
+                            <input type="password" id="gateAdminPassword" required value="admin123" autocomplete="current-password">
+                            <button type="button" class="btn-gate-toggle-pwd" id="gateTogglePwd" title="Toggle password">👁️</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-gate-submit" id="gateBtnSubmit">
+                        <span>🛡️ Authenticate &amp; Access Dashboard</span>
+                    </button>
+                </form>
+
+                <div class="gate-demo-box">
+                    <div>
+                        <span style="font-size: 11px; color: var(--muted);">Authorized Master Account:</span><br>
+                        <strong style="font-size: 12px; color: var(--cream);">admin@lafin.luxury</strong>
+                    </div>
+                    <button type="button" class="btn-gate-quick" id="gateBtnQuickUnlock">
+                        ⚡ Quick 1-Click Unlock
+                    </button>
+                </div>
+            </div>
+            <div class="admin-gate-footer">
+                <a href="Homepage.html">← Return to Storefront</a>
+                <a href="admin-login.html">Dedicated Login Page →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Navigation Bar -->
+    <header class="admin-nav">
+        <div class="nav-left">
+            <a href="Homepage.html" class="admin-logo">LA FIN<span>™</span> <span class="badge-admin">ADMIN PORTAL</span></a>
+        </div>
+        <div class="nav-center">
+            <span class="live-clock" id="liveClock">2026-11-01 11:00:00</span>
+        </div>
+        <div class="nav-right">
+            <a href="Homepage.html" class="btn-storefront">↗ View Storefront</a>
+            <div class="admin-profile">
+                <span class="admin-avatar">👑</span>
+                <div class="admin-info">
+                    <span class="admin-name" id="headerAdminName">Store Administrator</span>
+                    <span class="admin-role" id="headerAdminEmail">admin@lafin.luxury</span>
+                </div>
+            </div>
+            <!-- Logout Button -->
+            <button class="btn-admin-logout" id="btnAdminLogout" title="Terminate Admin Session">
+                <span>🚪</span> Logout Admin
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-menu">
+                <button class="nav-tab active" data-tab="tab-customers">
+                    <span class="tab-icon">👥</span>
+                    <span>Customer Management</span>
+                </button>
+                <button class="nav-tab" data-tab="tab-stocks">
+                    <span class="tab-icon">📦</span>
+                    <span>Stock & Inventory</span>
+                </button>
+                <button class="nav-tab" data-tab="tab-orders">
+                    <span class="tab-icon">🚚</span>
+                    <span>Orders & Fulfillment</span>
+                </button>
+                <button class="nav-tab" data-tab="tab-logins">
+                    <span class="tab-icon">📜</span>
+                    <span>Customer Login Logs</span>
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <span>Admin Session: Active</span>
+                </div>
+                <button class="btn-reset" id="btnResetData" title="Reset sample demo data">⟲ Reset Demo Data</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="admin-main">
+            <!-- Top KPI Metric Cards -->
+            <section class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon">👥</div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Registered Customers</span>
+                        <h3 id="statTotalCustomers">0</h3>
+                        <span class="kpi-sub" id="statNewCustomers">All verified logged in accounts</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">🟢</div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Active Logged-In</span>
+                        <h3 id="statActiveCustomers">0</h3>
+                        <span class="kpi-sub">Customers active in system</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">📦</div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Total Stock Units</span>
+                        <h3 id="statTotalStock">0</h3>
+                        <span class="kpi-sub" id="statStockLines">3 Fragrance Lines</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">⚠️</div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Low Stock Alerts</span>
+                        <h3 id="statLowStock">0</h3>
+                        <span class="kpi-sub text-warn">Under threshold limit</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">💰</div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Inventory Valuation</span>
+                        <h3 id="statStockValue">₹0</h3>
+                        <span class="kpi-sub">Total retail stock value</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon">🚚</div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Customer Orders</span>
+                        <h3 id="statTotalOrders">0</h3>
+                        <span class="kpi-sub" id="statInTransitOrders">0 In-Transit Dispatch</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notification Banner -->
+            <div id="adminNotification" class="notification-toast" style="display: none;"></div>
+
+            <!-- ============================================== -->
+            <!-- TAB 1: CUSTOMER MANAGEMENT                     -->
+            <!-- ============================================== -->
+            <section class="tab-content active" id="tab-customers">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Customer Records & Login Directory</h2>
+                            <p class="panel-desc">All customer accounts that logged in, their contact info, sessions, and individual Excel reports.</p>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn btn-outline" id="btnExportAllCustomers">
+                                📊 Export All Customers (Excel)
+                            </button>
+                            <button class="btn btn-gold" id="btnOpenAddCustomer">
+                                + Add Customer
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Search & Filter Bar -->
+                    <div class="filter-bar">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="customerSearchInput" placeholder="Search by name, email, phone, or customer ID...">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="customerFilterStatus" class="select-input">
+                                <option value="all">All Statuses</option>
+                                <option value="active">Active Only</option>
+                                <option value="with_cart">Customers With Active Bag</option>
+                            </select>
+                            <button class="btn btn-sm btn-outline" id="customerRefreshBtn">↻ Refresh</button>
+                        </div>
+                    </div>
+
+                    <!-- Customer Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="customersTable">
+                            <thead>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Customer Info</th>
+                                    <th>Contact</th>
+                                    <th>Location</th>
+                                    <th>Total Logins</th>
+                                    <th>Last Login</th>
+                                    <th>Bag Items</th>
+                                    <th>Status</th>
+                                    <th class="text-right">Export & Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- TAB 2: STOCK & INVENTORY MANAGEMENT            -->
+            <!-- ============================================== -->
+            <section class="tab-content" id="tab-stocks">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Fragrance Stock & Inventory Management</h2>
+                            <p class="panel-desc">Manage warehouse stock levels, update pricing, add perfumes, and sync stock with storefront.</p>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn btn-outline" id="btnExportStocks">
+                                📊 Download Stock Excel Report
+                            </button>
+                            <button class="btn btn-gold" id="btnOpenAddProduct">
+                                + Add New Fragrance
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stock Inventory Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="stocksTable">
+                            <thead>
+                                <tr>
+                                    <th>Fragrance / SKU</th>
+                                    <th>Scent Category & Notes</th>
+                                    <th>Unit Price</th>
+                                    <th>Stock Level</th>
+                                    <th>Stock Status</th>
+                                    <th>Inventory Value</th>
+                                    <th>Quick Adjust</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stocksTableBody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- TAB 3: CUSTOMER LOGIN AUDIT LOGS               -->
+            <!-- ============================================== -->
+            <section class="tab-content" id="tab-logins">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Customer & Admin Access Audit Trail</h2>
+                            <p class="panel-desc">Complete audit log of customer logins, admin access, timestamps, and client device tracking.</p>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn btn-outline" id="btnClearLogs">Clear Log History</button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="loginLogsTable">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Account ID</th>
+                                    <th>User / Customer Name</th>
+                                    <th>Email</th>
+                                    <th>Device / Platform</th>
+                                    <th>Event Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="loginLogsTableBody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- TAB 4: ORDERS & COURIER FULFILLMENT            -->
+            <!-- ============================================== -->
+            <section class="tab-content" id="tab-orders">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Customer Orders &amp; Courier Tracking Management</h2>
+                            <p class="panel-desc">Review client orders, change fulfillment &amp; live courier stages, assign AWB numbers, and export to Excel.</p>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn btn-outline" id="btnExportOrders">
+                                📊 Export Orders (Excel)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filter & Search Bar -->
+                    <div class="filter-bar">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="orderSearchInput" placeholder="Search by Order ID, customer name, email, or city...">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="orderFilterStatus" class="select-input">
+                                <option value="all">All Tracking Stages</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Processing">Processing &amp; Blending</option>
+                                <option value="In Transit">In Transit</option>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <button class="btn btn-sm btn-outline" id="orderRefreshBtn">↻ Refresh</button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table" id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Order Reference</th>
+                                    <th>Order Date</th>
+                                    <th>Customer &amp; Contact</th>
+                                    <th>Fragrance Items</th>
+                                    <th>Total (₹)</th>
+                                    <th>Payment</th>
+                                    <th>Tracking Stage</th>
+                                    <th>Courier &amp; AWB</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Populated dynamically by admin.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL: VIEW PARTICULAR CUSTOMER RECORD          -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="customerDetailModal" style="display: none;">
+        <div class="modal-box modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-badge" id="modalCustomerBadge">CUST-1001</span>
+                    <h3 id="modalCustomerName">Customer Dossier</h3>
+                </div>
+                <button class="modal-close" id="closeCustomerDetailModal">&times;</button>
+            </div>
+            <div class="modal-body" id="customerDetailContent">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modalCloseBtn">Close</button>
+                <button class="btn btn-gold" id="modalDownloadParticularExcel">
+                    📥 Download Customer Excel Record (.xlsx)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL: ADD / EDIT CUSTOMER                     -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="customerEditModal" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="customerModalTitle">Add Customer Record</h3>
+                <button class="modal-close" id="closeCustomerEditModal">&times;</button>
+            </div>
+            <form id="customerForm" class="modal-form">
+                <input type="hidden" id="custFormId">
+                <div class="form-group">
+                    <label for="custFormName">Full Name *</label>
+                    <input type="text" id="custFormName" required placeholder="e.g. John Doe">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="custFormEmail">Email Address *</label>
+                        <input type="email" id="custFormEmail" required placeholder="e.g. customer@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="custFormPhone">Phone Number *</label>
+                        <input type="tel" id="custFormPhone" required placeholder="+91 98765 43210">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="custFormCity">City / Address *</label>
+                        <input type="text" id="custFormCity" required placeholder="Mumbai, Maharashtra">
+                    </div>
+                    <div class="form-group">
+                        <label for="custFormStatus">Status</label>
+                        <select id="custFormStatus">
+                            <option value="Active">Active</option>
+                            <option value="VIP">VIP</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btnCancelCustomerForm">Cancel</button>
+                    <button type="submit" class="btn btn-gold">Save Customer Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL: ADD / EDIT PRODUCT & STOCK               -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="productEditModal" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="productModalTitle">Add / Update Fragrance Stock</h3>
+                <button class="modal-close" id="closeProductEditModal">&times;</button>
+            </div>
+            <form id="productForm" class="modal-form">
+                <input type="hidden" id="prodFormId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prodFormName">Fragrance Name *</label>
+                        <input type="text" id="prodFormName" required placeholder="e.g. Royal Amber">
+                    </div>
+                    <div class="form-group">
+                        <label for="prodFormSku">SKU Code *</label>
+                        <input type="text" id="prodFormSku" required placeholder="e.g. GRD-004">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prodFormCategory">Category</label>
+                        <input type="text" id="prodFormCategory" placeholder="e.g. Oriental Woody">
+                    </div>
+                    <div class="form-group">
+                        <label for="prodFormPrice">Unit Price (₹) *</label>
+                        <input type="number" id="prodFormPrice" min="1" required placeholder="799">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prodFormStock">Stock Quantity On Hand *</label>
+                        <input type="number" id="prodFormStock" min="0" required placeholder="30">
+                    </div>
+                    <div class="form-group">
+                        <label for="prodFormMinStock">Low Stock Alert Threshold</label>
+                        <input type="number" id="prodFormMinStock" min="1" value="10" placeholder="10">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="prodFormNotes">Scent Notes</label>
+                    <input type="text" id="prodFormNotes" placeholder="e.g. BERGAMOT · OUD · AMBER">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" id="btnCancelProductForm">Cancel</button>
+                    <button type="submit" class="btn btn-gold">Save Fragrance Stock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODAL: ORDER DETAILS & TRACKING UPDATE         -->
+    <!-- ============================================== -->
+    <div class="modal-backdrop" id="orderEditModal" style="display: none;">
+        <div class="modal-box modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <span class="modal-badge" id="orderModalBadge">LAF-ORD-000000</span>
+                    <h3 id="orderModalTitle">Update Order Fulfillment &amp; Courier Tracking</h3>
+                </div>
+                <button class="modal-close" id="closeOrderEditModal">&times;</button>
+            </div>
+            <div class="modal-body" id="orderModalBody">
+                <!-- Dynamically populated by admin.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="store.js"></script>
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

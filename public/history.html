@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History &amp; Live Tracking | LA FIN Luxury Fragrances</title>
+    <meta name="description" content="Track your bespoke LA FIN luxury fragrance orders in real-time from artisan blending to doorstep delivery.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="history.css">
+</head>
+<body>
+
+    <!-- ============================================== -->
+    <!-- NAVBAR                                         -->
+    <!-- ============================================== -->
+    <header class="navbar">
+        <a href="Homepage.html" class="logo">LA FIN<span>™</span></a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="Homepage.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Cart</a>
+            <a href="Homepage.html#story">Our Story</a>
+            <a href="Homepage.html#contact">Contact</a>
+            <a href="history.html" class="active" title="Order History &amp; Live Courier Tracking">
+                <span class="nav-icon">📜</span> History
+            </a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="cart.html" class="cart" id="bagBtn" title="View Shopping Bag">
+                Bag (<span id="cartCount">0</span>)
+            </a>
+
+            <!-- Customer Sign In Button -->
+            <button class="login-btn" id="loginBtn" aria-label="Customer Sign In">
+                <span class="user-avatar-icon">👤</span>
+                <span id="loginBtnLabel">Sign In</span>
+            </button>
+
+            <!-- User Dropdown for Logged In Customer -->
+            <div class="user-dropdown" id="userDropdown" style="display: none;">
+                <div class="dropdown-header">
+                    <span class="dropdown-avatar" id="dropdownAvatar">AS</span>
+                    <div class="dropdown-user-details">
+                        <p class="dropdown-name" id="dropdownUserName">Aarav Sharma</p>
+                        <p class="dropdown-email" id="dropdownUserEmail">aarav@example.com</p>
+                    </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-info-row">
+                    <span>Account ID:</span>
+                    <strong id="dropdownUserId">CUST-1001</strong>
+                </div>
+                <div class="dropdown-info-row">
+                    <span>Account Type:</span>
+                    <strong style="color: #27ae60;">Customer</strong>
+                </div>
+                <div class="dropdown-info-row">
+                    <span>Total Orders:</span>
+                    <strong id="dropdownOrderCount">0</strong>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="history.html" class="dropdown-item">
+                    <span>📦</span> My Orders &amp; Tracking
+                </a>
+                <button class="dropdown-item logout" id="logoutBtn">
+                    <span>🚪</span> Sign Out
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================== -->
+    <!-- MAIN CONTENT                                   -->
+    <!-- ============================================== -->
+    <main class="history-page">
+        <!-- Hero Section -->
+        <section class="history-hero">
+            <div class="hero-text-block">
+                <p class="eyebrow">CLIENT CONCIERGE · COURIER FULFILLMENT</p>
+                <h1>Order History &amp; Live Tracking</h1>
+                <p class="subtitle">Follow your handcrafted fragrances from our perfumery atelier through air cargo transport to your doorstep.</p>
+            </div>
+
+            <div class="hero-stats-row">
+                <div class="stat-pill">
+                    <span class="stat-pill-icon">📦</span>
+                    <div>
+                        <p class="stat-pill-label">Total Orders</p>
+                        <p class="stat-pill-val" id="statOrdersCount">0</p>
+                    </div>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-pill-icon">✈️</span>
+                    <div>
+                        <p class="stat-pill-label">In-Transit</p>
+                        <p class="stat-pill-val" id="statInTransitCount" style="color: #60a5fa;">0</p>
+                    </div>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-pill-icon">✨</span>
+                    <div>
+                        <p class="stat-pill-label">Delivered</p>
+                        <p class="stat-pill-val" id="statDeliveredCount" style="color: #4ade80;">0</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guest Sync Banner (shown when signed out) -->
+        <div id="guestSyncBanner" class="guest-sync-banner" style="display: none;">
+            <div class="guest-banner-text">
+                <span style="font-size: 22px;">👑</span>
+                <div>
+                    <strong>Viewing guest &amp; preview orders.</strong>
+                    <span style="color: var(--muted); margin-left: 6px;">Sign in to sync your verified customer orders and personal address book.</span>
+                </div>
+            </div>
+            <button type="button" class="btn-banner-login" id="btnBannerSignIn">
+                Customer Sign In ↗
+            </button>
+        </div>
+
+        <!-- Search & Filter Toolbar -->
+        <section class="history-toolbar">
+            <div class="search-box-wrap">
+                <span class="search-icon-fixed">🔍</span>
+                <input type="text" id="orderSearchInput" placeholder="Enter Order ID (e.g. LAF-ORD-849210), email, or AWB tracking #...">
+                <button type="button" class="btn-track-search" id="btnSearchTrack">Track ↗</button>
+            </div>
+
+            <div class="filter-pills-row">
+                <button type="button" class="filter-btn active" data-filter="all">All Orders</button>
+                <button type="button" class="filter-btn" data-filter="active">In Transit / Active</button>
+                <button type="button" class="filter-btn" data-filter="Delivered">Delivered</button>
+                <button type="button" class="filter-btn" data-filter="Cancelled">Cancelled</button>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- LIVE TRACKING SHOWCASE CARD                    -->
+        <!-- ============================================== -->
+        <section class="tracking-showcase" id="trackingShowcaseSection" style="display: none;">
+            <div class="tracking-header">
+                <div>
+                    <span style="font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; display: block; margin-bottom: 4px;">Live Shipment Tracking</span>
+                    <div class="tracking-id-group">
+                        <span class="tracking-tag-pill" id="liveTrackingId">LAF-ORD-849210</span>
+                        <button type="button" class="btn-copy-id" id="btnCopyOrderId" title="Copy Order ID">📋 Copy ID</button>
+                    </div>
+                </div>
+
+                <div class="tracking-status-badge" id="liveTrackingStatusBadge" style="background: rgba(96, 165, 250, 0.15); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3);">
+                    <span class="status-pulsing-dot"></span>
+                    <span id="liveTrackingStatusText">In Transit (Air Express)</span>
+                </div>
+            </div>
+
+            <!-- Meta details row -->
+            <div class="tracking-meta-grid">
+                <div class="meta-box">
+                    <p class="m-label">Estimated Delivery</p>
+                    <p class="m-val" id="liveEstDelivery">Nov 03, 2026</p>
+                    <p class="m-sub">Before 7:00 PM</p>
+                </div>
+                <div class="meta-box">
+                    <p class="m-label">Courier Partner</p>
+                    <p class="m-val" id="liveCourierName">BlueDart Luxury Air Express</p>
+                    <p class="m-sub" id="liveCourierAwb">AWB: BD-884920192-IN</p>
+                </div>
+                <div class="meta-box">
+                    <p class="m-label">Destination Recipient</p>
+                    <p class="m-val" id="liveRecipientName">Aarav Sharma</p>
+                    <p class="m-sub" id="liveRecipientCity">Bandra West, Mumbai</p>
+                </div>
+                <div class="meta-box">
+                    <p class="m-label">Payment &amp; Value</p>
+                    <p class="m-val" id="liveOrderTotal">₹1,448</p>
+                    <p class="m-sub" id="livePaymentMethod">Paid via UPI</p>
+                </div>
+            </div>
+
+            <!-- Visual 6-Stage Stepper -->
+            <div class="stepper-container">
+                <div class="stepper-track-wrap">
+                    <div class="stepper-line-bg"></div>
+                    <div class="stepper-line-fill" id="stepperLineFill" style="width: 60%;"></div>
+
+                    <!-- Step 1 -->
+                    <div class="step-node completed" id="stepNode1">
+                        <div class="step-circle">✓</div>
+                        <p class="step-title">Confirmed</p>
+                        <p class="step-desc">Order Logged</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="step-node completed" id="stepNode2">
+                        <div class="step-circle">✓</div>
+                        <p class="step-title">Blending</p>
+                        <p class="step-desc">Artisan Atelier</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="step-node completed" id="stepNode3">
+                        <div class="step-circle">✓</div>
+                        <p class="step-title">Packaged</p>
+                        <p class="step-desc">Wax Sealed</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="step-node active" id="stepNode4">
+                        <div class="step-circle">✈️</div>
+                        <p class="step-title">In Transit</p>
+                        <p class="step-desc">Air Cargo Freight</p>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="step-node" id="stepNode5">
+                        <div class="step-circle">🚚</div>
+                        <p class="step-title">Out for Delivery</p>
+                        <p class="step-desc">Doorstep Courier</p>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="step-node" id="stepNode6">
+                        <div class="step-circle">🎁</div>
+                        <p class="step-title">Delivered</p>
+                        <p class="step-desc">Signature Received</p>
+                    </div>
+                </div>
+
+                <!-- Live Simulator Controls (for testing & interactive demo) -->
+                <div class="simulator-box">
+                    <span class="sim-label">⚡ Interactive Stage Simulator:</span>
+                    <div class="sim-buttons">
+                        <button type="button" class="sim-btn" data-stage="Confirmed">1. Confirmed</button>
+                        <button type="button" class="sim-btn" data-stage="Processing">2. Blending</button>
+                        <button type="button" class="sim-btn" data-stage="Packaged">3. Packaged</button>
+                        <button type="button" class="sim-btn" data-stage="In Transit">4. In Transit</button>
+                        <button type="button" class="sim-btn" data-stage="Out for Delivery">5. Out for Delivery</button>
+                        <button type="button" class="sim-btn" data-stage="Delivered">6. Delivered</button>
+                    </div>
+                </div>
+
+                <!-- Checkpoints Log -->
+                <div class="checkpoint-timeline">
+                    <h3 class="timeline-title"><span>📍</span> Live Transit Checkpoints</h3>
+                    <div class="timeline-list" id="checkpointTimelineList">
+                        <!-- Populated by history.js -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- ORDER HISTORY DIRECTORY                        -->
+        <!-- ============================================== -->
+        <section class="orders-history-section">
+            <div class="orders-section-heading" id="ordersSectionHeading">
+                <h2>Your Order History</h2>
+                <span class="orders-count-badge" id="ordersHeadingCount">0 Orders</span>
+            </div>
+
+            <!-- List of Order Cards -->
+            <div class="orders-grid" id="ordersGrid">
+                <!-- Dynamically injected by history.js -->
+            </div>
+
+            <!-- Empty State Container (Shown if user has not ordered anything yet) -->
+            <div id="emptyOrdersBox" class="empty-orders-box" style="display: none;">
+                <div class="empty-icon">🏺</div>
+                <h3>No Orders Placed Yet</h3>
+                <p>You have not placed any fragrance orders yet. Once you order something, your live courier tracking and delivery timeline will appear here.</p>
+                <a href="shop.html" class="btn-start-shopping">Start Shopping &amp; Place Order ↗</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================================== -->
+    <!-- INVOICE MODAL                                  -->
+    <!-- ============================================== -->
+    <div class="invoice-modal-backdrop" id="invoiceModal" style="display: none;">
+        <div class="invoice-box">
+            <div class="invoice-header">
+                <div>
+                    <h2 class="invoice-logo">LA FIN<span>™</span></h2>
+                    <p style="font-size: 11px; color: #777; margin-top: 2px;">HAUTE PARFUMERIE · LUXURY ATELIER</p>
+                    <p style="font-size: 11px; color: #777;">GSTIN: 24AAACL7821Q1Z6</p>
+                </div>
+                <div class="invoice-meta">
+                    <h3 style="font-size: 16px; color: #111; margin-bottom: 4px;">TAX INVOICE</h3>
+                    <p>Invoice #: <strong id="invNumber">LAF-INV-849210</strong></p>
+                    <p>Date: <span id="invDate">2026-11-01</span></p>
+                    <p>Status: <strong style="color: #27ae60;">PAID</strong></p>
+                </div>
+            </div>
+
+            <div class="invoice-grid">
+                <div>
+                    <strong style="font-size: 12px; text-transform: uppercase; color: #777;">Billed &amp; Delivered To:</strong>
+                    <p id="invCustomerName" style="font-weight: 600; margin-top: 4px;">Aarav Sharma</p>
+                    <p id="invCustomerAddress" style="color: #444;">Flat 402, Sea Crest Towers, Bandra West, Mumbai, Maharashtra - 400050</p>
+                    <p id="invCustomerContact" style="color: #666;">Phone: +91 98765 43210</p>
+                    <p id="invCustomerEmail" style="color: #666;">Email: aarav.sharma@example.com</p>
+                </div>
+                <div>
+                    <strong style="font-size: 12px; text-transform: uppercase; color: #777;">Shipment Details:</strong>
+                    <p style="margin-top: 4px;">Carrier: <strong id="invCarrier">BlueDart Luxury Air Express</strong></p>
+                    <p>AWB Number: <span id="invAwb" style="font-family: monospace;">BD-884920192-IN</span></p>
+                    <p>Payment: <span id="invPaymentMode">UPI (Verified)</span></p>
+                    <p>Delivery: <span id="invDeliveryType">Express Air Shipping</span></p>
+                </div>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Item Description</th>
+                        <th>HSN Code</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th style="text-align: right;">Amount (INR)</th>
+                    </tr>
+                </thead>
+                <tbody id="invItemsBody">
+                    <!-- Populated dynamically -->
+                </tbody>
+            </table>
+
+            <div class="invoice-totals">
+                <div class="inv-total-row">
+                    <span>Fragrance Subtotal:</span>
+                    <span id="invSubtotal">₹1,398</span>
+                </div>
+                <div class="inv-total-row">
+                    <span>Express Air Delivery:</span>
+                    <span>₹50</span>
+                </div>
+                <div class="inv-total-row">
+                    <span>CGST (9%) &amp; SGST (9%):</span>
+                    <span style="color: #777;">Included</span>
+                </div>
+                <div class="inv-total-row grand">
+                    <span>Total Amount Paid:</span>
+                    <strong id="invGrandTotal">₹1,448</strong>
+                </div>
+            </div>
+
+            <div class="invoice-footer">
+                <button type="button" class="btn-close-inv" id="btnCloseInvoice">Close</button>
+                <button type="button" class="btn-print-inv" id="btnPrintInvoice">🖨️ Print / Save PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- CUSTOMER AUTHENTICATION MODAL                   -->
+    <!-- ============================================== -->
+    <div class="invoice-modal-backdrop" id="authModal" style="display: none;">
+        <div style="background: #151513; border: 1px solid var(--gold); border-radius: 16px; padding: 32px; width: 100%; max-width: 460px; box-shadow: 0 25px 60px rgba(0,0,0,0.8);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" id="tabLoginBtn" style="background: transparent; border: none; color: var(--gold); font-size: 15px; font-weight: 700; border-bottom: 2px solid var(--gold); padding-bottom: 4px; cursor: pointer;">Customer Sign In</button>
+                    <button type="button" id="tabRegisterBtn" style="background: transparent; border: none; color: var(--muted); font-size: 15px; font-weight: 600; padding-bottom: 4px; cursor: pointer;">Register New Account</button>
+                </div>
+                <button type="button" id="closeAuthModal" style="background: transparent; border: none; color: var(--muted); font-size: 20px; cursor: pointer;">✕</button>
+            </div>
+
+            <!-- Tab 1: Login Form -->
+            <form id="customerLoginForm" style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Email Address</label>
+                    <input type="email" id="modalCustomerEmail" required placeholder="e.g. aarav.sharma@example.com" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Password</label>
+                    <input type="password" id="modalCustomerPassword" required value="password123" placeholder="Enter password" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                </div>
+                <button type="submit" style="background: linear-gradient(135deg, #d3b47e, #b89355); color: #111; font-weight: 700; padding: 12px; border-radius: 8px; border: none; margin-top: 6px; cursor: pointer;">
+                    Sign In &amp; View My Orders
+                </button>
+                <div style="background: rgba(198,165,107,0.06); padding: 10px; border-radius: 6px; font-size: 11px; color: var(--muted); text-align: center; border: 1px dashed var(--gold);">
+                    Demo Customer Account: <strong style="color: var(--cream);">aarav.sharma@example.com</strong>
+                </div>
+            </form>
+
+            <!-- Tab 2: Register Form -->
+            <form id="customerRegisterForm" style="display: none; flex-direction: column; gap: 14px;">
+                <div>
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Full Name *</label>
+                    <input type="text" id="regName" required placeholder="e.g. Eleanor Vance" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Email Address *</label>
+                        <input type="email" id="regEmail" required placeholder="e.g. eleanor@example.com" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Phone Number *</label>
+                        <input type="tel" id="regPhone" required placeholder="+91 98765 43210" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                    </div>
+                </div>
+                <div>
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Delivery City / Address *</label>
+                    <input type="text" id="regCity" required placeholder="e.g. Rajkot, Gujarat" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;">Password *</label>
+                    <input type="password" id="regPassword" required value="password123" placeholder="Create password" style="width: 100%; padding: 12px; background: #0f0f0e; border: 1px solid var(--dark-border); color: var(--cream); border-radius: 8px;">
+                </div>
+                <button type="submit" style="background: linear-gradient(135deg, #d3b47e, #b89355); color: #111; font-weight: 700; padding: 12px; border-radius: 8px; border: none; margin-top: 6px; cursor: pointer;">
+                    Create Account &amp; Sign In
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="historyToast" class="history-toast"></div>
+
+    <!-- ============================================== -->
+    <!-- FOOTER                                         -->
+    <!-- ============================================== -->
+    <footer>
+        <a href="Homepage.html" class="logo">LA FIN<span>™</span></a>
+        <p>Leave a little mystery wherever you go.</p>
+        <p class="copyright">© 2026 LA FIN. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="store.js"></script>
+    <script src="auth.js"></script>
+    <script src="history.js"></script>
+</body>
+</html>
+

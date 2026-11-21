@@ -1,0 +1,26 @@
+{
+  "name": "lafin-luxury-perfumes",
+  "version": "1.0.0",
+  "description": "LA FIN Luxury Perfumes e-commerce storefront with secured admin dashboard, stocks management, and customer Excel reporting",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "perfume",
+    "luxury",
+    "ecommerce",
+    "admin-dashboard",
+    "excel-export",
+    "stock-management"
+  ],
+  "author": "Harsh Dhamecha",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

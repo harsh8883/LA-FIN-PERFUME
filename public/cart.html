@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Bag &amp; Checkout | LA FIN</title>
+    <meta name="description" content="Review your luxury fragrance selection, delivery details, and complete your order with LA FIN. Fixed ₹50 express delivery across India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+
+<!-- ============================================== -->
+<!-- NAVBAR                                         -->
+<!-- ============================================== -->
+<header class="navbar">
+    <a href="Homepage.html" class="logo">LA FIN<span>™</span></a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="Homepage.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="cart.html" class="active">Cart</a>
+        <a href="Homepage.html#story">Our Story</a>
+        <a href="Homepage.html#contact">Contact</a>
+        <a href="history.html" class="nav-history" title="Order History &amp; Live Tracking">
+            <span class="nav-icon">📜</span> History
+        </a>
+    </nav>
+
+    <div class="nav-actions">
+        <a href="cart.html" class="cart active-cart-link" id="bagBtn" aria-label="Current Shopping Bag">
+            Bag (<span id="cartCount">0</span>)
+        </a>
+
+        <button class="login-btn" id="loginBtn" aria-label="Customer Sign In">
+            <span class="user-avatar-icon">👤</span>
+            <span id="loginBtnLabel">Sign In</span>
+        </button>
+
+        <div class="user-dropdown" id="userDropdown" style="display: none;">
+            <div class="dropdown-header">
+                <span class="dropdown-avatar" id="dropdownAvatar">AS</span>
+                <div class="dropdown-user-details">
+                    <p class="dropdown-name" id="dropdownUserName">Aarav Sharma</p>
+                    <p class="dropdown-email" id="dropdownUserEmail">aarav@example.com</p>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-info-row">
+                <span>Account ID:</span>
+                <strong id="dropdownUserId">CUST-1001</strong>
+            </div>
+            <div class="dropdown-info-row">
+                <span>Account Type:</span>
+                <strong style="color: #27ae60;">Customer</strong>
+            </div>
+            <div class="dropdown-info-row">
+                <span>Total Orders:</span>
+                <strong id="dropdownOrderCount">0</strong>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="history.html" class="dropdown-item">
+                <span>📦</span> My Orders &amp; Tracking
+            </a>
+            <button class="dropdown-item logout" id="logoutBtn">
+                <span>🚪</span> Sign Out
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- ============================================== -->
+<!-- CART HERO BANNER                               -->
+<!-- ============================================== -->
+<section class="cart-hero">
+    <div class="cart-hero-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="Homepage.html">Home</a>
+            <span>/</span>
+            <a href="shop.html">Shop</a>
+            <span>/</span>
+            <span class="current">Shopping Bag &amp; Checkout</span>
+        </nav>
+        <h1>Your Fragrance Bag</h1>
+        <p>Handcrafted luxury scents, curated for you. Review your selections and proceed to secure checkout.</p>
+    </div>
+</section>
+
+<!-- ============================================== -->
+<!-- MAIN CART & CHECKOUT CONTAINER                 -->
+<!-- ============================================== -->
+<main class="cart-main">
+
+    <!-- STATE 1: GUEST / LOGIN REQUIRED -->
+    <section class="auth-required-box" id="authRequiredBox" style="display: none;">
+        <div class="auth-req-card">
+            <div class="auth-req-icon">🔐</div>
+            <span class="eyebrow">AUTHENTICATION REQUIRED</span>
+            <h2>Please Sign In to Access Your Bag</h2>
+            <p>
+                To provide a personalized experience and protect your bag selections,
+                LA FIN requires customers to be logged in before viewing or adding fragrances to their shopping bag.
+            </p>
+            <div class="auth-req-actions">
+                <button type="button" class="btn-primary" id="btnOpenLoginReq">Sign In / Register ↗</button>
+                <a href="shop.html" class="btn-secondary">Browse Fragrances ↗</a>
+            </div>
+            <div class="auth-req-perks">
+                <div class="perk-item"><span>✧</span> 100% Secure Checkout</div>
+                <div class="perk-item"><span>◈</span> Fixed ₹50 Flat Delivery</div>
+                <div class="perk-item"><span>◇</span> Real-time Order Tracking</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATE 2: EMPTY BAG (Logged In) -->
+    <section class="empty-cart-box" id="emptyCartBox" style="display: none;">
+        <div class="empty-cart-card">
+            <div class="empty-icon">🛍️</div>
+            <span class="eyebrow">YOUR BAG IS EMPTY</span>
+            <h2>No Fragrances in Your Bag</h2>
+            <p>Your luxury collection is waiting. Explore our signature collection — from crisp ocean aquatics to deep velvet oud.</p>
+            <a href="shop.html" class="btn-primary">Explore Fragrance Collection ↗</a>
+        </div>
+    </section>
+
+    <!-- STATE 3: ACTIVE CART WITH ITEMS & CHECKOUT -->
+    <section class="cart-grid" id="cartContentGrid" style="display: none;">
+        
+        <!-- LEFT COLUMN: ITEMS & SHIPPING FORM -->
+        <div class="cart-left-col">
+            
+            <!-- Items Box -->
+            <div class="cart-panel">
+                <div class="cart-panel-header">
+                    <h2>Fragrances in Bag (<span id="panelCartCount">0</span>)</h2>
+                    <button type="button" class="btn-link" id="btnClearBag">Clear Bag</button>
+                </div>
+
+                <div class="cart-items-table" id="cartItemsList">
+                    <!-- Dynamic Cart Items injected by cart.js -->
+                </div>
+
+                <div class="cart-panel-subactions">
+                    <a href="shop.html" class="text-link-gold">← Continue Shopping</a>
+                </div>
+            </div>
+
+            <!-- Shipping & Delivery Address Panel -->
+            <div class="cart-panel shipping-panel">
+                <div class="cart-panel-header">
+                    <h2>Shipping &amp; Delivery Details</h2>
+                    <span class="delivery-badge">🚚 Express Delivery across India</span>
+                </div>
+                <p class="panel-desc">Please provide the delivery address for your order. We deliver within 3-5 business days.</p>
+
+                <form id="shippingForm" class="shipping-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="shipName">Recipient Full Name *</label>
+                            <input type="text" id="shipName" placeholder="e.g. Aarav Sharma" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipPhone">Mobile Number (For Delivery OTP) *</label>
+                            <input type="tel" id="shipPhone" placeholder="+91 98765 43210" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shipAddress">Complete Delivery Address (House/Flat, Street, Landmark) *</label>
+                        <textarea id="shipAddress" rows="2" placeholder="e.g. Flat 402, Signature Heights, Bandra West" required></textarea>
+                    </div>
+
+                    <div class="form-row three-col">
+                        <div class="form-group">
+                            <label for="shipCity">City *</label>
+                            <input type="text" id="shipCity" placeholder="e.g. Mumbai" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipState">State *</label>
+                            <input type="text" id="shipState" placeholder="e.g. Maharashtra" value="Maharashtra" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="shipPincode">Pincode (6 digits) *</label>
+                            <input type="text" id="shipPincode" placeholder="400050" maxlength="6" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shipNotes">Delivery Instructions (Optional)</label>
+                        <input type="text" id="shipNotes" placeholder="e.g. Ring the doorbell, leave with security if unavailable">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: SUMMARY & PAYMENT OPTIONS -->
+        <aside class="cart-right-col">
+            <div class="summary-card">
+                <h3>Order Summary</h3>
+                
+                <div class="summary-lines">
+                    <div class="summary-line">
+                        <span class="label">Items Subtotal (<span id="summaryItemCount">0</span> items)</span>
+                        <span class="value" id="summarySubtotal">₹0</span>
+                    </div>
+
+                    <!-- Fixed 50 delivery charge -->
+                    <div class="summary-line delivery-line">
+                        <div class="label-group">
+                            <span class="label">Delivery Charge</span>
+                            <span class="tag-pill">Fixed Rate</span>
+                        </div>
+                        <span class="value highlight-gold" id="summaryDeliveryFee">₹50</span>
+                    </div>
+
+                    <div class="summary-note">
+                        <span>🛡️ Tamper-proof luxury scent packaging included</span>
+                    </div>
+
+                    <div class="summary-line">
+                        <span class="label">Luxury Velvet Gift Box</span>
+                        <span class="value free-tag">FREE (Included)</span>
+                    </div>
+
+                    <div class="summary-line">
+                        <span class="label">Applicable Taxes (GST)</span>
+                        <span class="value">Included</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-total-line">
+                        <span class="total-label">Grand Total</span>
+                        <span class="total-amount" id="summaryGrandTotal">₹50</span>
+                    </div>
+                </div>
+
+                <!-- PAYMENT METHOD SELECTOR -->
+                <div class="payment-methods-section">
+                    <h4>Choose Payment Method</h4>
+                    <p class="payment-intro">All transactions are secured with 256-bit luxury grade encryption. <strong>Notice:</strong> Only Cash on Delivery (COD) is currently accepted.</p>
+
+                    <div class="payment-options">
+                        
+                        <!-- OPTION 1: CASH ON DELIVERY (COD) -->
+                        <label class="payment-card active" for="payCOD">
+                            <div class="payment-card-top">
+                                <input type="radio" name="paymentOption" id="payCOD" value="cod" checked>
+                                <div class="payment-title-group">
+                                    <span class="payment-title">💵 Cash on Delivery (COD)</span>
+                                    <span class="payment-desc">Pay with cash or UPI at your doorstep upon arrival.</span>
+                                </div>
+                                <span class="badge-zero">Active · No Extra COD Fee</span>
+                            </div>
+                            <div class="payment-details-panel" id="panelCOD">
+                                <p class="cod-notice">
+                                    ✓ <strong>Zero Extra Charges:</strong> Simply pay the exact amount of <span class="cod-amount-pill" id="codAmountPill">₹0</span> directly to the courier executive upon doorstep delivery.
+                                </p>
+                            </div>
+                        </label>
+
+                        <!-- OPTION 2: UPI (Google Pay, PhonePe, Paytm, etc.) -->
+                        <label class="payment-card payment-card-disabled" for="payUPI" title="Online UPI payments are temporarily disabled. Please choose Cash on Delivery.">
+                            <div class="payment-card-top">
+                                <input type="radio" name="paymentOption" id="payUPI" value="upi" disabled>
+                                <div class="payment-title-group">
+                                    <span class="payment-title">📱 UPI / QR Code</span>
+                                    <span class="payment-desc">Google Pay, PhonePe, Paytm, BHIM, CRED</span>
+                                </div>
+                                <span class="badge-disabled">Disabled for now</span>
+                            </div>
+                            <div class="payment-details-panel" id="panelUPI" style="display: none;">
+                                <div class="upi-tabs">
+                                    <button type="button" class="upi-subtab active" id="tabUpiId">Enter UPI ID</button>
+                                    <button type="button" class="upi-subtab" id="tabUpiQr">Scan QR Code</button>
+                                </div>
+
+                                <div class="upi-view" id="upiIdView">
+                                    <div class="upi-input-group">
+                                        <input type="text" id="upiVpa" placeholder="e.g. mobile@okhdfcbank or user@paytm" disabled>
+                                        <button type="button" class="btn-verify" id="btnVerifyUpi" disabled>Verify UPI</button>
+                                    </div>
+                                    <p class="upi-help" id="upiStatusText">UPI payments are temporarily offline. Please select Cash on Delivery.</p>
+                                </div>
+
+                                <div class="upi-view" id="upiQrView" style="display: none;">
+                                    <div class="qr-display-box">
+                                        <div class="qr-code-graphic">
+                                            <!-- SVG Simulated UPI QR Code -->
+                                            <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+                                                <rect width="140" height="140" fill="#FFFFFF" rx="8"/>
+                                                <!-- Outer QR Patterns -->
+                                                <rect x="12" y="12" width="36" height="36" fill="#11110F" rx="4"/>
+                                                <rect x="18" y="18" width="24" height="24" fill="#FFFFFF"/>
+                                                <rect x="24" y="24" width="12" height="12" fill="#11110F"/>
+
+                                                <rect x="92" y="12" width="36" height="36" fill="#11110F" rx="4"/>
+                                                <rect x="98" y="18" width="24" height="24" fill="#FFFFFF"/>
+                                                <rect x="104" y="24" width="12" height="12" fill="#11110F"/>
+
+                                                <rect x="12" y="92" width="36" height="36" fill="#11110F" rx="4"/>
+                                                <rect x="18" y="98" width="24" height="24" fill="#FFFFFF"/>
+                                                <rect x="24" y="104" width="12" height="12" fill="#11110F"/>
+
+                                                <!-- Stylized QR blocks -->
+                                                <rect x="56" y="14" width="8" height="16" fill="#C6A56B"/>
+                                                <rect x="68" y="24" width="16" height="8" fill="#11110F"/>
+                                                <rect x="56" y="38" width="24" height="8" fill="#11110F"/>
+
+                                                <rect x="16" y="58" width="16" height="8" fill="#11110F"/>
+                                                <rect x="40" y="56" width="12" height="12" fill="#C6A56B"/>
+                                                <rect x="60" y="54" width="20" height="14" fill="#11110F"/>
+                                                <rect x="88" y="58" width="16" height="8" fill="#11110F"/>
+                                                <rect x="110" y="54" width="16" height="14" fill="#C6A56B"/>
+
+                                                <rect x="56" y="76" width="8" height="24" fill="#11110F"/>
+                                                <rect x="72" y="80" width="16" height="8" fill="#C6A56B"/>
+                                                <rect x="68" y="96" width="20" height="12" fill="#11110F"/>
+
+                                                <rect x="94" y="80" width="14" height="14" fill="#11110F"/>
+                                                <rect x="114" y="84" width="12" height="24" fill="#11110F"/>
+                                                <rect x="96" y="104" width="14" height="14" fill="#C6A56B"/>
+                                            </svg>
+                                        </div>
+                                        <div class="qr-text-info">
+                                            <strong>Scan to Pay <span id="qrAmountDisplay">₹0</span></strong>
+                                            <p>Scan with any UPI app on your phone</p>
+                                            <div class="upi-app-logos">GPay · PhonePe · Paytm · BHIM</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- OPTION 3: CREDIT / DEBIT CARD -->
+                        <label class="payment-card payment-card-disabled" for="payCard" title="Card payments are temporarily disabled. Please choose Cash on Delivery.">
+                            <div class="payment-card-top">
+                                <input type="radio" name="paymentOption" id="payCard" value="card" disabled>
+                                <div class="payment-title-group">
+                                    <span class="payment-title">💳 Credit / Debit Card</span>
+                                    <span class="payment-desc">Visa, MasterCard, RuPay, American Express</span>
+                                </div>
+                                <span class="badge-disabled">Disabled for now</span>
+                            </div>
+                            <div class="payment-details-panel" id="panelCard" style="display: none;">
+                                <div class="card-inputs">
+                                    <div class="form-group">
+                                        <label for="cardNum">Card Number</label>
+                                        <input type="text" id="cardNum" placeholder="4111 2222 3333 4444" maxlength="19" disabled>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="cardExp">Expiry Date</label>
+                                            <input type="text" id="cardExp" placeholder="MM/YY" maxlength="5" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cardCvv">CVV</label>
+                                            <input type="password" id="cardCvv" placeholder="•••" maxlength="4" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cardName">Cardholder Name</label>
+                                        <input type="text" id="cardName" placeholder="Name printed on card" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- OPTION 4: NET BANKING -->
+                        <label class="payment-card payment-card-disabled" for="payNet" title="Net Banking is temporarily disabled. Please choose Cash on Delivery.">
+                            <div class="payment-card-top">
+                                <input type="radio" name="paymentOption" id="payNet" value="netbanking" disabled>
+                                <div class="payment-title-group">
+                                    <span class="payment-title">🏦 Net Banking</span>
+                                    <span class="payment-desc">All major Indian banks supported</span>
+                                </div>
+                                <span class="badge-disabled">Disabled for now</span>
+                            </div>
+                            <div class="payment-details-panel" id="panelNet" style="display: none;">
+                                <div class="form-group">
+                                    <label for="bankSelect">Select Your Bank</label>
+                                    <select id="bankSelect" class="bank-select" disabled>
+                                        <option value="">-- Choose Bank --</option>
+                                        <option value="HDFC">HDFC Bank</option>
+                                        <option value="SBI">State Bank of India</option>
+                                        <option value="ICICI">ICICI Bank</option>
+                                        <option value="AXIS">Axis Bank</option>
+                                        <option value="KOTAK">Kotak Mahindra Bank</option>
+                                        <option value="PNB">Punjab National Bank</option>
+                                        <option value="BOB">Bank of Baroda</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+
+                <!-- PLACE ORDER BUTTON -->
+                <button type="button" class="btn-place-order" id="btnPlaceOrder">
+                    Place Order • Pay <span id="btnPayAmount">₹50</span> ↗
+                </button>
+
+                <div class="trust-footer">
+                    <div class="trust-badge">🔒 256-Bit SSL Protection</div>
+                    <div class="trust-badge">📦 100% Authentic Scents</div>
+                    <div class="trust-badge">🚚 Dispatched in 24 Hrs</div>
+                </div>
+            </div>
+        </aside>
+
+    </section>
+
+</main>
+
+<!-- ============================================== -->
+<!-- ORDER CONFIRMATION MODAL & RECEIPT             -->
+<!-- ============================================== -->
+<div class="order-modal-backdrop" id="orderSuccessModal" style="display: none;">
+    <div class="order-receipt-box">
+        <div class="receipt-header">
+            <div class="receipt-badge">🎉 Order Confirmed</div>
+            <h2>Thank You for Your Order!</h2>
+            <p>Your LA FIN luxury fragrance package has been booked.</p>
+            <div class="order-id-pill">
+                <span>Order Reference:</span>
+                <strong id="receiptOrderId">LAF-ORD-000000</strong>
+            </div>
+        </div>
+
+        <div class="receipt-body">
+            
+            <div class="receipt-info-grid">
+                <div>
+                    <span class="r-label">Placed On:</span>
+                    <strong class="r-val" id="receiptDate">-</strong>
+                </div>
+                <div>
+                    <span class="r-label">Payment Method:</span>
+                    <strong class="r-val" id="receiptPayment">-</strong>
+                </div>
+                <div>
+                    <span class="r-label">Recipient:</span>
+                    <strong class="r-val" id="receiptName">-</strong>
+                </div>
+                <div>
+                    <span class="r-label">Delivery To:</span>
+                    <strong class="r-val" id="receiptAddress">-</strong>
+                </div>
+            </div>
+
+            <div class="receipt-divider"></div>
+
+            <!-- Itemized List -->
+            <div class="receipt-items-list" id="receiptItemsList">
+                <!-- Injected by cart.js -->
+            </div>
+
+            <div class="receipt-divider"></div>
+
+            <!-- Receipt Breakdown -->
+            <div class="receipt-totals">
+                <div class="r-total-row">
+                    <span>Subtotal:</span>
+                    <span id="receiptSubtotal">₹0</span>
+                </div>
+                <div class="r-total-row">
+                    <span>Delivery Charge (Fixed):</span>
+                    <span style="color: var(--gold); font-weight: 600;">₹50</span>
+                </div>
+                <div class="r-total-row">
+                    <span>Luxury Velvet Packaging:</span>
+                    <span style="color: #27ae60;">FREE</span>
+                </div>
+                <div class="r-total-row grand">
+                    <span>Total Paid / Payable:</span>
+                    <strong id="receiptGrandTotal">₹50</strong>
+                </div>
+            </div>
+
+            <div class="receipt-delivery-estimate">
+                <span>🚚 Estimated Delivery:</span>
+                <strong>Within 3 to 5 business days</strong>
+            </div>
+        </div>
+
+        <div class="receipt-footer" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn-receipt-print" id="btnPrintReceipt">🖨️ Print Receipt</button>
+            <a href="history.html" class="btn-primary" id="btnReceiptTrack" style="background: var(--gold); color: #111; font-weight: 700; padding: 12px 20px; border-radius: 8px;">🚚 Track Live Order ↗</a>
+            <a href="shop.html" class="btn-primary" id="btnReceiptContinue">Continue Shopping ↗</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- CUSTOMER AUTHENTICATION MODAL                   -->
+<!-- ============================================== -->
+<div class="auth-modal-backdrop" id="authModal" style="display: none;">
+    <div class="auth-modal-box">
+        <div class="auth-modal-header">
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLoginBtn" type="button">Customer Sign In</button>
+                <button class="auth-tab-btn" id="tabRegisterBtn" type="button">Register New Account</button>
+            </div>
+            <button class="auth-close-btn" id="closeAuthModal" aria-label="Close modal">&times;</button>
+        </div>
+
+        <div class="auth-modal-body">
+            <!-- TAB 1: CUSTOMER SIGN IN FORM -->
+            <form id="loginForm" class="auth-form active">
+                <p class="auth-intro">Sign in to your LA FIN account to access your shopping bag and complete your order.</p>
+                
+                <div class="auth-input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="e.g. aarav.sharma@example.com">
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password" value="password123">
+                </div>
+
+                <div class="auth-quick-demo">
+                    <span>✨ Quick Test:</span>
+                    <button type="button" class="btn-demo-fill" id="btnDemoCustomer">
+                        👤 Fill Demo: Aarav Sharma
+                    </button>
+                </div>
+
+                <button type="submit" class="auth-submit-btn">Sign In to LA FIN</button>
+
+                <p class="auth-switch-text">
+                    New to LA FIN? <a href="#" id="switchToRegister">Create an account</a>
+                </p>
+            </form>
+
+            <!-- TAB 2: REGISTER FORM -->
+            <form id="registerForm" class="auth-form">
+                <p class="auth-intro">Create your LA FIN membership to enjoy seamless checkout and order tracking.</p>
+                
+                <div class="auth-input-group">
+                    <label for="regName">Full Name *</label>
+                    <input type="text" id="regName" required placeholder="e.g. Devansh Singhania">
+                </div>
+
+                <div class="auth-input-row">
+                    <div class="auth-input-group">
+                        <label for="regEmail">Email Address *</label>
+                        <input type="email" id="regEmail" required placeholder="e.g. devansh@example.com">
+                    </div>
+                    <div class="auth-input-group">
+                        <label for="regPhone">Phone Number *</label>
+                        <input type="tel" id="regPhone" required placeholder="+91 98111 22334">
+                    </div>
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="regCity">Delivery City / Address *</label>
+                    <input type="text" id="regCity" required placeholder="e.g. Mumbai, Bandra West">
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="regPassword">Password *</label>
+                    <input type="password" id="regPassword" required placeholder="Create a secure password" value="secret123">
+                </div>
+
+                <button type="submit" class="auth-submit-btn">Create Account &amp; Sign In</button>
+
+                <p class="auth-switch-text">
+                    Already have an account? <a href="#" id="switchToLogin">Sign in here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="cartToast" class="cart-toast" style="display: none;"></div>
+
+<!-- FOOTER -->
+<footer>
+    <a href="Homepage.html" class="logo">LA FIN<span>™</span></a>
+    <p>Leave a little mystery wherever you go.</p>
+    <p class="copyright">© 2026 LA FIN. All rights reserved.</p>
+</footer>
+
+<script src="store.js"></script>
+<script src="auth.js"></script>
+<script src="cart.js"></script>
+</body>
+</html>

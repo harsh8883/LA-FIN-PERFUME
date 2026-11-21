@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop All Fragrances | LA FIN</title>
+    <meta name="description" content="Explore the full LA FIN luxury fragrance collection. Shop all perfumes — fresh, intense, oriental, and more. Find your signature scent.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shop.css">
+</head>
+<body>
+
+<!-- ============================================== -->
+<!-- NAVBAR                                         -->
+<!-- ============================================== -->
+<header class="navbar">
+    <a href="Homepage.html" class="logo">LA FIN<span>™</span></a>
+
+    <button class="menu-toggle" id="menuToggle"
+            aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="Homepage.html">Home</a>
+        <a href="shop.html" class="active">Shop</a>
+        <a href="cart.html">Cart</a>
+        <a href="Homepage.html#story">Our Story</a>
+        <a href="Homepage.html#contact">Contact</a>
+        <a href="history.html" class="nav-history" title="Order History &amp; Live Tracking">
+            <span class="nav-icon">📜</span> History
+        </a>
+    </nav>
+
+    <div class="nav-actions">
+        <a href="cart.html" class="cart" id="bagBtn" aria-label="Open shopping bag">
+            Bag (<span id="cartCount">0</span>)
+        </a>
+
+        <button class="login-btn" id="loginBtn" aria-label="Customer Sign In">
+            <span class="user-avatar-icon">👤</span>
+            <span id="loginBtnLabel">Sign In</span>
+        </button>
+
+        <div class="user-dropdown" id="userDropdown" style="display: none;">
+            <div class="dropdown-header">
+                <span class="dropdown-avatar" id="dropdownAvatar">AS</span>
+                <div class="dropdown-user-details">
+                    <p class="dropdown-name" id="dropdownUserName">Aarav Sharma</p>
+                    <p class="dropdown-email" id="dropdownUserEmail">aarav@example.com</p>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-info-row">
+                <span>Account ID:</span>
+                <strong id="dropdownUserId">CUST-1001</strong>
+            </div>
+            <div class="dropdown-info-row">
+                <span>Account Type:</span>
+                <strong style="color: #27ae60;">Customer</strong>
+            </div>
+            <div class="dropdown-info-row">
+                <span>Total Logins:</span>
+                <strong id="dropdownLoginCount">12</strong>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="history.html" class="dropdown-item">
+                <span>📦</span> My Orders &amp; Tracking
+            </a>
+            <button class="dropdown-item logout" id="logoutBtn">
+                <span>🚪</span> Sign Out
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- ============================================== -->
+<!-- SHOP HERO BANNER                               -->
+<!-- ============================================== -->
+<section class="shop-hero">
+    <div class="shop-hero-content">
+        <span class="eyebrow">THE COMPLETE COLLECTION</span>
+        <h1>Every Scent.<br>Every Story.</h1>
+        <p>From fresh aquatics to deep orientals — discover the full LA FIN universe. Each fragrance is crafted to leave an impression that stays.</p>
+        <div class="shop-hero-stats">
+            <div class="stat-item">
+                <span class="stat-number" id="heroProductCount">6</span>
+                <span class="stat-label">Fragrances</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Collections</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">50ml</span>
+                <span class="stat-label">Eau de Parfum</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================== -->
+<!-- FILTER BAR                                     -->
+<!-- ============================================== -->
+<div class="filter-bar" role="navigation" aria-label="Product filters">
+    <span class="filter-label">Filter</span>
+    <div class="filter-chips" id="filterChips">
+        <button class="filter-chip active" data-filter="all" id="chip-all">All</button>
+        <button class="filter-chip" data-filter="fresh" id="chip-fresh">Fresh</button>
+        <button class="filter-chip" data-filter="intense" id="chip-intense">Intense</button>
+        <button class="filter-chip" data-filter="oriental" id="chip-oriental">Oriental</button>
+        <button class="filter-chip" data-filter="floral" id="chip-floral">Floral</button>
+        <button class="filter-chip" data-filter="woody" id="chip-woody">Woody</button>
+    </div>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search fragrances…" aria-label="Search fragrances">
+        <span class="search-icon">🔍</span>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- SORT BAR                                       -->
+<!-- ============================================== -->
+<div class="sort-bar">
+    <p class="result-count" id="resultCount">Showing <strong id="resultNum">6</strong> fragrances</p>
+    <select class="sort-select" id="sortSelect" aria-label="Sort products">
+        <option value="default">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name-asc">Name: A–Z</option>
+        <option value="stock-desc">Most Available</option>
+    </select>
+</div>
+
+<!-- ============================================== -->
+<!-- PRODUCTS GRID                                  -->
+<!-- ============================================== -->
+<main class="shop-section">
+    <div class="products-grid" id="productsGrid">
+        <!-- Products dynamically rendered by shop.js -->
+    </div>
+</main>
+
+<!-- ============================================== -->
+<!-- FOOTER                                         -->
+<!-- ============================================== -->
+<footer>
+    <a href="Homepage.html" class="logo">LA FIN<span>™</span></a>
+    <p>Leave a little mystery wherever you go.</p>
+    <p class="copyright">© 2026 LA FIN. All rights reserved.</p>
+</footer>
+
+<!-- ============================================== -->
+<!-- CUSTOMER AUTHENTICATION MODAL                   -->
+<!-- ============================================== -->
+<div class="auth-modal-backdrop" id="authModal" style="display: none;">
+    <div class="auth-modal-box">
+        <div class="auth-modal-header">
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLoginBtn" type="button">Customer Sign In</button>
+                <button class="auth-tab-btn" id="tabRegisterBtn" type="button">Register New Account</button>
+            </div>
+            <button class="auth-close-btn" id="closeAuthModal" aria-label="Close modal">&times;</button>
+        </div>
+
+        <div class="auth-modal-body">
+            <!-- TAB 1: CUSTOMER SIGN IN FORM -->
+            <form id="loginForm" class="auth-form active">
+                <p class="auth-intro">Welcome back to LA FIN. Sign in to sync your bag and access your orders.</p>
+                
+                <div class="auth-input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="e.g. aarav.sharma@example.com">
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password" value="password123">
+                </div>
+
+                <div class="auth-quick-demo">
+                    <span>✨ Quick Test:</span>
+                    <button type="button" class="btn-demo-fill" id="btnDemoCustomer">
+                        👤 Fill Demo: Aarav Sharma
+                    </button>
+                </div>
+
+                <button type="submit" class="auth-submit-btn">Sign In to LA FIN</button>
+
+                <p class="auth-switch-text">
+                    New to LA FIN? <a href="#" id="switchToRegister">Create an account</a>
+                </p>
+            </form>
+
+            <!-- TAB 2: REGISTER FORM -->
+            <form id="registerForm" class="auth-form">
+                <p class="auth-intro">Create your LA FIN membership to enjoy personalized luxury fragrances.</p>
+                
+                <div class="auth-input-group">
+                    <label for="regName">Full Name *</label>
+                    <input type="text" id="regName" required placeholder="e.g. Devansh Singhania">
+                </div>
+
+                <div class="auth-input-row">
+                    <div class="auth-input-group">
+                        <label for="regEmail">Email Address *</label>
+                        <input type="email" id="regEmail" required placeholder="e.g. devansh@example.com">
+                    </div>
+                    <div class="auth-input-group">
+                        <label for="regPhone">Phone Number *</label>
+                        <input type="tel" id="regPhone" required placeholder="+91 98111 22334">
+                    </div>
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="regCity">Delivery City / Address *</label>
+                    <input type="text" id="regCity" required placeholder="e.g. Mumbai, Bandra West">
+                </div>
+
+                <div class="auth-input-group">
+                    <label for="regPassword">Password *</label>
+                    <input type="password" id="regPassword" required placeholder="Create a secure password" value="secret123">
+                </div>
+
+                <button type="submit" class="auth-submit-btn">Create Account &amp; Sign In</button>
+
+                <p class="auth-switch-text">
+                    Already have an account? <a href="#" id="switchToLogin">Sign in here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="shopToast" class="shop-toast" style="display: none;"></div>
+
+<script src="store.js"></script>
+<script src="auth.js"></script>
+<script src="shop.js"></script>
+</body>
+</html>

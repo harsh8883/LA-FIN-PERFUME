@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA FIN | Luxury Fragrances</title>
+    <meta name="description" content="Discover LA FIN luxury fragrances. Find your signature scent.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="Homepage.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="#" class="logo">LA FIN<span>™</span></a>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Cart</a>
+            <a href="#story">Our Story</a>
+            <a href="#contact">Contact</a>
+            <a href="history.html" class="nav-history" title="Order History &amp; Live Tracking">
+                <span class="nav-icon">📜</span> History
+            </a>
+        </nav>
+
+        <!-- Right Side Actions: Bag and Login Button -->
+        <div class="nav-actions">
+            <a href="cart.html" class="cart" id="bagBtn" title="View Shopping Bag">Bag (<span
+                    id="cartCount">0</span>)</a>
+
+            <!-- Login Button near Bag button -->
+            <button class="login-btn" id="loginBtn" aria-label="Customer Sign In">
+                <span class="user-avatar-icon">👤</span>
+                <span id="loginBtnLabel">Sign In</span>
+            </button>
+
+            <!-- User Dropdown for Logged In Customer -->
+            <div class="user-dropdown" id="userDropdown" style="display: none;">
+                <div class="dropdown-header">
+                    <span class="dropdown-avatar" id="dropdownAvatar">AS</span>
+                    <div class="dropdown-user-details">
+                        <p class="dropdown-name" id="dropdownUserName">Aarav Sharma</p>
+                        <p class="dropdown-email" id="dropdownUserEmail">aarav@example.com</p>
+                    </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-info-row">
+                    <span>Account ID:</span>
+                    <strong id="dropdownUserId">CUST-1001</strong>
+                </div>
+                <div class="dropdown-info-row">
+                    <span>Account Type:</span>
+                    <strong style="color: #27ae60;">Customer</strong>
+                </div>
+                <div class="dropdown-info-row">
+                    <span>Total Logins:</span>
+                    <strong id="dropdownLoginCount">12</strong>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="history.html" class="dropdown-item">
+                    <span>📦</span> My Orders &amp; Tracking
+                </a>
+                <button class="dropdown-item logout" id="logoutBtn">
+                    <span>🚪</span> Sign Out
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <p class="eyebrow">SCENTS THAT STAY</p>
+                <h1>More Than<br>A Fragrance.</h1>
+                <p class="hero-text">
+                    Crafted for those who desire more.
+                    Discover your signature scent with LA FIN.
+                </p>
+                <a href="shop.html" class="btn">Shop All Fragrances ↗</a>
+            </div>
+            <div class="hero-label">
+                <span>01 / SIGNATURE COLLECTION</span>
+                <span>EAU DE PARFUM · 50 ML</span>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <div><span>✧</span>
+                <p>Premium Fragrances<small>Made to stand out</small></p>
+            </div>
+            <div><span>◈</span>
+                <p>Lasting Impressions<small>Scents worth remembering</small></p>
+            </div>
+            <div><span>◇</span>
+                <p>Elegant Packaging<small>Luxury in every detail</small></p>
+            </div>
+        </section>
+
+        <section class="shop section" id="shop">
+            <div class="section-heading">
+                <p class="eyebrow">MOST LOVED</p>
+                <h2>Our Bestsellers</h2>
+                <p>Three moods. Three stories. One unforgettable feeling.</p>
+            </div>
+
+            <div class="products" id="productsContainer">
+                <article class="product-card" data-product-id="1">
+                    <div class="product-image ocean">
+                        <span class="product-tag">01 / FRESH</span>
+                        <span class="product-badge bestseller">&#9733; Bestseller</span>
+                        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=700&q=85"
+                            alt="Ocean-inspired perfume bottle">
+                    </div>
+                    <div class="product-info">
+                        <p class="notes">CITRUS · AQUATIC · MUSK</p>
+                        <h3>Ocean Rush</h3>
+                        <div class="stock-pill" id="stockTag-1">45 in stock</div>
+                        <div class="product-bottom">
+                            <span class="price">₹599</span>
+                            <button class="add-btn" data-id="1" data-name="Ocean Rush" data-price="599">Add to Bag
+                                +</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-product-id="2">
+                    <div class="product-image ember">
+                        <span class="product-tag">02 / INTENSE</span>
+                        <span class="product-badge bestseller">&#9733; Bestseller</span>
+                        <img src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=700&q=85"
+                            alt="Luxury amber perfume bottle">
+                    </div>
+                    <div class="product-info">
+                        <p class="notes">WOODY · AMBER · VANILLA</p>
+                        <h3>Midnight Ember</h3>
+                        <div class="stock-pill" id="stockTag-2">28 in stock</div>
+                        <div class="product-bottom">
+                            <span class="price">₹699</span>
+                            <button class="add-btn" data-id="2" data-name="Midnight Ember" data-price="699">Add to Bag
+                                +</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-product-id="3">
+                    <div class="product-image oud">
+                        <span class="product-tag">03 / MYSTERY</span>
+                        <span class="product-badge bestseller">&#9733; Bestseller</span>
+                        <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=85"
+                            alt="Elegant dark perfume bottle">
+                    </div>
+                    <div class="product-info">
+                        <p class="notes">OUD · SANDALWOOD · MUSK</p>
+                        <h3>Velvet Oud</h3>
+                        <div class="stock-pill" id="stockTag-3">8 in stock</div>
+                        <div class="product-bottom">
+                            <span class="price">₹799</span>
+                            <button class="add-btn" data-id="3" data-name="Velvet Oud" data-price="799">Add to Bag
+                                +</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <p class="cart-message" id="cartMessage" aria-live="polite"></p>
+            <div style="text-align:center; margin-top: 40px;">
+                <a href="shop.html" class="btn" id="viewAllBtn">View All Fragrances ↗</a>
+            </div>
+        </section>
+
+        <section class="story" id="story">
+            <div class="story-image">
+                <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1000&q=85"
+                    alt="Perfume and fragrance collection">
+            </div>
+            <div class="story-content">
+                <p class="eyebrow">THE LA FIN PHILOSOPHY</p>
+                <h2>Desire More.<br>Be Remembered.</h2>
+                <p>
+                    LA FIN is for those who never settle for ordinary.
+                    Every fragrance is an expression of confidence,
+                    character, and individuality.
+                </p>
+                <a href="#shop" class="text-link">EXPLORE OUR WORLD ↗</a>
+            </div>
+        </section>
+
+        <section class="newsletter" id="contact">
+            <p class="eyebrow">JOIN THE LA FIN WORLD</p>
+            <h2>Luxury begins with you.</h2>
+            <p>Follow our journey and discover your next signature scent.</p>
+            <a class="btn" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Follow on
+                Instagram ↗</a>
+        </section>
+    </main>
+
+    <footer>
+        <a href="#home" class="logo">LA FIN<span>™</span></a>
+        <p>Leave a little mystery wherever you go.</p>
+        <p class="copyright">© 2026 LA FIN. All rights reserved.</p>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- CUSTOMER AUTHENTICATION MODAL                   -->
+    <!-- ============================================== -->
+    <div class="auth-modal-backdrop" id="authModal" style="display: none;">
+        <div class="auth-modal-box">
+            <div class="auth-modal-header">
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" id="tabLoginBtn" type="button">Customer Sign In</button>
+                    <button class="auth-tab-btn" id="tabRegisterBtn" type="button">Register New Account</button>
+                </div>
+                <button class="auth-close-btn" id="closeAuthModal" aria-label="Close modal">&times;</button>
+            </div>
+
+            <div class="auth-modal-body">
+                <!-- TAB 1: CUSTOMER SIGN IN FORM -->
+                <form id="loginForm" class="auth-form active">
+                    <p class="auth-intro">Welcome back to LA FIN. Sign in to sync your bag and access your orders.</p>
+
+                    <div class="auth-input-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" required placeholder="e.g. aarav.sharma@example.com">
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required placeholder="Enter your password"
+                            value="password123">
+                    </div>
+
+                    <div class="auth-quick-demo">
+                        <span>✨ Quick Test:</span>
+                        <button type="button" class="btn-demo-fill" id="btnDemoCustomer">
+                            👤 Fill Demo: Aarav Sharma
+                        </button>
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">Sign In to LA FIN</button>
+
+                    <p class="auth-switch-text">
+                        New to LA FIN? <a href="#" id="switchToRegister">Create an account</a>
+                    </p>
+                </form>
+
+                <!-- TAB 2: REGISTER FORM -->
+                <form id="registerForm" class="auth-form">
+                    <p class="auth-intro">Create your LA FIN membership to enjoy personalized luxury fragrances.</p>
+
+                    <div class="auth-input-group">
+                        <label for="regName">Full Name *</label>
+                        <input type="text" id="regName" required placeholder="e.g. Devansh Singhania">
+                    </div>
+
+                    <div class="auth-input-row">
+                        <div class="auth-input-group">
+                            <label for="regEmail">Email Address *</label>
+                            <input type="email" id="regEmail" required placeholder="e.g. devansh@example.com">
+                        </div>
+                        <div class="auth-input-group">
+                            <label for="regPhone">Phone Number *</label>
+                            <input type="tel" id="regPhone" required placeholder="+91 98111 22334">
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="regCity">Delivery City / Address *</label>
+                        <input type="text" id="regCity" required placeholder="e.g. Mumbai, Bandra West">
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label for="regPassword">Password *</label>
+                        <input type="password" id="regPassword" required placeholder="Create a secure password"
+                            value="secret123">
+                    </div>
+
+                    <button type="submit" class="auth-submit-btn">Create Account &amp; Sign In</button>
+
+                    <p class="auth-switch-text">
+                        Already have an account? <a href="#" id="switchToLogin">Sign in here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast for Homepage -->
+    <div id="homeToast" class="home-toast" style="display: none;"></div>
+
+    <script src="store.js"></script>
+    <script src="auth.js"></script>
+    <script src="Homepage.js"></script>
+</body>
+
+
+</html>
