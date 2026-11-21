@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const gateAdminPassword = document.getElementById('gateAdminPassword');
     const gateTogglePwd = document.getElementById('gateTogglePwd');
     const gateBtnSubmit = document.getElementById('gateBtnSubmit');
-    const gateBtnQuickUnlock = document.getElementById('gateBtnQuickUnlock');
     const gateAlert = document.getElementById('gateAlert');
 
     const headerAdminName = document.getElementById('headerAdminName');
@@ -43,12 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             if (adminGatewayOverlay) {
                 adminGatewayOverlay.style.display = 'flex';
-                if (gateAdminEmail && typeof ADMIN_CONFIG !== 'undefined') {
-                    gateAdminEmail.value = ADMIN_CONFIG.EMAIL;
-                }
-                if (gateAdminPassword) {
-                    gateAdminPassword.value = 'admin123';
-                }
             }
             return false;
         }
@@ -89,24 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     showGateAlert(res.message, 'error');
                 }
             }, 300);
-        });
-    }
-
-    // Quick 1-Click unlock
-    if (gateBtnQuickUnlock) {
-        gateBtnQuickUnlock.addEventListener('click', () => {
-            if (typeof ADMIN_CONFIG !== 'undefined') {
-                if (gateAdminEmail) gateAdminEmail.value = ADMIN_CONFIG.EMAIL;
-                if (gateAdminPassword) gateAdminPassword.value = 'admin123';
-                const res = AdminAuth.login(ADMIN_CONFIG.EMAIL, 'admin123', true);
-                if (res.success) {
-                    showGateAlert('⚡ Quick access verified. Opening dashboard...', 'success');
-                    setTimeout(() => {
-                        checkAuthAndGate();
-                        showNotification('Welcome Store Administrator. Admin session activated.');
-                    }, 350);
-                }
-            }
         });
     }
 

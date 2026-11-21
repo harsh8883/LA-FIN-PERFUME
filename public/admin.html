@@ -28,12 +28,12 @@
                 <form id="gateLoginForm" class="gate-form">
                     <div class="gate-group">
                         <label for="gateAdminEmail">Administrator Email</label>
-                        <input type="email" id="gateAdminEmail" required value="admin@lafin.luxury" autocomplete="username">
+                        <input type="email" id="gateAdminEmail" required placeholder="admin@lafin.luxury" autocomplete="username">
                     </div>
                     <div class="gate-group">
                         <label for="gateAdminPassword">Master Password</label>
                         <div class="gate-pwd-wrap">
-                            <input type="password" id="gateAdminPassword" required value="admin123" autocomplete="current-password">
+                            <input type="password" id="gateAdminPassword" required placeholder="Enter master password" autocomplete="current-password">
                             <button type="button" class="btn-gate-toggle-pwd" id="gateTogglePwd" title="Toggle password">👁️</button>
                         </div>
                     </div>
@@ -41,16 +41,6 @@
                         <span>🛡️ Authenticate &amp; Access Dashboard</span>
                     </button>
                 </form>
-
-                <div class="gate-demo-box">
-                    <div>
-                        <span style="font-size: 11px; color: var(--muted);">Authorized Master Account:</span><br>
-                        <strong style="font-size: 12px; color: var(--cream);">admin@lafin.luxury</strong>
-                    </div>
-                    <button type="button" class="btn-gate-quick" id="gateBtnQuickUnlock">
-                        ⚡ Quick 1-Click Unlock
-                    </button>
-                </div>
             </div>
             <div class="admin-gate-footer">
                 <a href="Homepage.html">← Return to Storefront</a>

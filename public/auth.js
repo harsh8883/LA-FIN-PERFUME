@@ -90,7 +90,7 @@ const AdminAuth = {
                 if (remember && typeof localStorage !== 'undefined') {
                     localStorage.setItem(ADMIN_CONFIG.SESSION_KEY, payloadStr);
                 }
-            } catch (e) {}
+            } catch (e) { }
 
             // Log security event
             if (typeof Store !== 'undefined') {
@@ -103,7 +103,7 @@ const AdminAuth = {
                         timestamp: Store.formatDateTime(),
                         device: Store.detectDevice()
                     });
-                } catch(e) {}
+                } catch (e) { }
             }
 
             window.dispatchEvent(new CustomEvent('lafin_admin_auth_change', { detail: { authenticated: true } }));
@@ -217,15 +217,15 @@ const AdminAuth = {
                     timestamp: Store.formatDateTime(),
                     device: Store.detectDevice()
                 });
-            } catch (e) {}
+            } catch (e) { }
         }
 
         // 3. Optional server notification
         try {
             if (typeof fetch !== 'undefined') {
-                fetch('/api/admin/logout', { method: 'POST' }).catch(() => {});
+                fetch('/api/admin/logout', { method: 'POST' }).catch(() => { });
             }
-        } catch (e) {}
+        } catch (e) { }
 
         window.dispatchEvent(new CustomEvent('lafin_admin_auth_change', { detail: { authenticated: false } }));
         window.dispatchEvent(new CustomEvent('greed_admin_auth_change', { detail: { authenticated: false } }));
@@ -259,7 +259,7 @@ const Auth = {
 
         const existingCustomer = Store.getCustomerByEmail(cleanEmail);
         const customerName = existingCustomer ? existingCustomer.name : cleanEmail.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-        
+
         const customer = Store.recordCustomerLogin({
             email: cleanEmail,
             name: customerName,
