@@ -280,11 +280,12 @@
         </section>
     </main>
 
-    <!-- ============================================== -->
+    <!-- ============================================== */
     <!-- INVOICE MODAL                                  -->
     <!-- ============================================== -->
     <div class="invoice-modal-backdrop" id="invoiceModal" style="display: none;">
         <div class="invoice-box">
+            <button type="button" class="btn-inv-close-top" id="btnCloseInvoiceTop" title="Close Invoice" aria-label="Close">✕</button>
             <div class="invoice-header">
                 <div>
                     <h2 class="invoice-logo">LA FIN<span>™</span></h2>
@@ -316,20 +317,22 @@
                 </div>
             </div>
 
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th>Item Description</th>
-                        <th>HSN Code</th>
-                        <th>Qty</th>
-                        <th>Unit Price</th>
-                        <th style="text-align: right;">Amount (INR)</th>
-                    </tr>
-                </thead>
-                <tbody id="invItemsBody">
-                    <!-- Populated dynamically -->
-                </tbody>
-            </table>
+            <div class="invoice-table-wrapper">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th>Item Description</th>
+                            <th>HSN Code</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                            <th style="text-align: right;">Amount (INR)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invItemsBody">
+                        <!-- Populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
 
             <div class="invoice-totals">
                 <div class="inv-total-row">

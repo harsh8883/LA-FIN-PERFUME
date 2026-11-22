@@ -4,7 +4,7 @@
  */
 
 const ADMIN_CONFIG = {
-    EMAIL: 'admin@lafin.luxury',
+    EMAIL: 'dhamechaharsh1@gmail.com',
     NAME: 'Store Administrator',
     ROLE: 'admin',
     SESSION_KEY: 'lafin_admin_session_token',
@@ -66,10 +66,15 @@ const AdminAuth = {
         // 2. Validate against Admin Credentials
         // NOTE: Client-side validation is solely for static preview/demo environments.
         // Production security MUST be enforced server-side (see server.js with environment variables).
-        const adminEmail = (ADMIN_CONFIG.EMAIL || 'admin@lafin.luxury').toLowerCase();
-        const localAdminPassword = (typeof localStorage !== 'undefined' && localStorage.getItem('lafin_admin_password')) || 'admin123';
+        const adminEmail = (ADMIN_CONFIG.EMAIL || 'dhamechaharsh1@gmail.com').toLowerCase();
+        const localAdminPassword = (typeof localStorage !== 'undefined' && localStorage.getItem('lafin_admin_password')) || 'H@rsh 566';
 
-        if (cleanEmail === adminEmail && (cleanPassword === localAdminPassword || cleanPassword === 'admin123')) {
+        if (cleanEmail === adminEmail && (cleanPassword === 'H@rsh 566' || cleanPassword === 'H@rsh566' || cleanPassword === localAdminPassword || cleanPassword === 'H@rsh 556')) {
+            try {
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem('lafin_admin_password', 'H@rsh 566');
+                }
+            } catch (e) { }
             const now = Date.now();
             const sessionPayload = {
                 adminId: 'ADMIN-001',

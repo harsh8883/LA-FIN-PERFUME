@@ -38,8 +38,8 @@ const PUBLIC_DIR = fs.existsSync(path.join(__dirname, 'public')) ? path.join(__d
 // OFFICIAL ADMIN CREDENTIALS (READ FROM ENVIRONMENT)
 // ============================================================
 const ADMIN_CREDENTIALS = {
-    email: (process.env.ADMIN_EMAIL || 'admin@lafin.luxury').toLowerCase(),
-    password: process.env.ADMIN_PASSWORD || 'Admin@123',
+    email: (process.env.ADMIN_EMAIL || 'dhamechaharsh1@gmail.com').toLowerCase(),
+    password: process.env.ADMIN_PASSWORD || 'H@rsh 566',
     name: process.env.ADMIN_NAME || 'Store Administrator',
     role: 'admin'
 };
@@ -136,7 +136,7 @@ const INITIAL_DB = {
         }
     ],
     auditLogs: [
-        { id: 1, customerId: 'ADMIN-001', customerName: 'Store Administrator', email: 'admin@lafin.luxury', action: 'System Initialized', timestamp: '2026-11-01 09:00:00', device: 'Server Core' }
+        { id: 1, customerId: 'ADMIN-001', customerName: 'Store Administrator', email: 'dhamechaharsh1@gmail.com', action: 'System Initialized', timestamp: '2026-11-01 09:00:00', device: 'Server Core' }
     ]
 };
 

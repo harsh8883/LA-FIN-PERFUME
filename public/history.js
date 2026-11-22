@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             authModal.style.display = 'none';
         }
         if (invoiceModal && e.target === invoiceModal) {
-            invoiceModal.style.display = 'none';
+            closeInvoiceModal();
         }
     });
 
@@ -752,13 +752,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (invGrandTotal) invGrandTotal.textContent = `₹${(order.total || 0).toLocaleString('en-IN')}`;
 
         invoiceModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInvoiceModal() {
+        if (invoiceModal) invoiceModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    const btnCloseInvoiceTop = document.getElementById('btnCloseInvoiceTop');
+    if (btnCloseInvoiceTop) {
+        btnCloseInvoiceTop.addEventListener('click', closeInvoiceModal);
     }
 
     if (btnCloseInvoice) {
-        btnCloseInvoice.addEventListener('click', () => {
-            if (invoiceModal) invoiceModal.style.display = 'none';
-        });
+        btnCloseInvoice.addEventListener('click', closeInvoiceModal);
     }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && invoiceModal && invoiceModal.style.display !== 'none') {
+            closeInvoiceModal();
+        }
+    });
 
     if (btnPrintInvoice) {
         btnPrintInvoice.addEventListener('click', () => {

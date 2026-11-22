@@ -423,6 +423,7 @@
 <div class="order-modal-backdrop" id="orderSuccessModal" style="display: none;">
     <div class="order-receipt-box">
         <div class="receipt-header">
+            <button type="button" class="btn-receipt-close" id="btnCloseReceiptModal" title="Close receipt" aria-label="Close">✕</button>
             <div class="receipt-badge">🎉 Order Confirmed</div>
             <h2>Thank You for Your Order!</h2>
             <p>Your LA FIN luxury fragrance package has been booked.</p>
@@ -488,10 +489,10 @@
             </div>
         </div>
 
-        <div class="receipt-footer" style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <div class="receipt-footer">
+            <a href="history.html" class="btn-primary" id="btnReceiptTrack">🚚 Track Live Order ↗</a>
+            <a href="shop.html" class="btn-secondary" id="btnReceiptContinue">Continue Shopping ↗</a>
             <button type="button" class="btn-receipt-print" id="btnPrintReceipt">🖨️ Print Receipt</button>
-            <a href="history.html" class="btn-primary" id="btnReceiptTrack" style="background: var(--gold); color: #111; font-weight: 700; padding: 12px 20px; border-radius: 8px;">🚚 Track Live Order ↗</a>
-            <a href="shop.html" class="btn-primary" id="btnReceiptContinue">Continue Shopping ↗</a>
         </div>
     </div>
 </div>

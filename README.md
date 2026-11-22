@@ -13,7 +13,7 @@ A luxury e-commerce fragrance platform featuring client and server-side route pr
 | **Admin Direct URL (Login Gateway)** | [`admin-login.html`](public/admin-login.html) |
 | **Admin Dashboard URL** | [`admin.html`](public/admin.html) *(Auto-redirects to login if not authenticated)* |
 | **Production Credentials** | Set via `.env` (`ADMIN_EMAIL`, `ADMIN_PASSWORD`) |
-| **Local / Static Demo Login** | `admin@lafin.luxury` / `admin123` |
+| **Local / Static Demo Login** | `dhamechaharsh1@gmail.com` / `H@rsh 566` |
 | **Role** | Super Administrator (`admin`) |
 
 > **Security Note:** If any normal customer or unauthenticated visitor types `admin.html` into their browser URL bar, both the server route guard and the client-side gatekeeper immediately block them and redirect to `admin-login.html`. If a customer attempts to log in with customer credentials at the admin gateway, access is strictly rejected:  
@@ -140,8 +140,8 @@ e:\LA FIN\
   - If running Node server: `http://localhost:3000/admin-login.html`
   - If deployed to Cloudflare: `https://<your-worker>.workers.dev/admin-login.html`
 - Enter admin credentials:
-  - **Email:** Defined in `.env` (`ADMIN_EMAIL`, default: `admin@lafin.luxury`)
-  - **Password:** Defined in `.env` (`ADMIN_PASSWORD`, default local demo: `admin123`)
+  - **Email:** Defined in `.env` (`ADMIN_EMAIL`, default: `dhamechaharsh1@gmail.com`)
+  - **Password:** Defined in `.env` (`ADMIN_PASSWORD`, default local demo: `H@rsh 566`)
 - Click *"Authenticate & Access Dashboard"* to enter [`admin.html`](public/admin.html).
 
 ### 2. Static Preview & Cloudflare Deployment

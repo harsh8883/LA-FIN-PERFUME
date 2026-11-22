@@ -670,6 +670,37 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCartView();
     }
 
+    function closeOrderReceiptModal() {
+        if (orderSuccessModal) {
+            orderSuccessModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    const btnCloseReceiptModal = document.getElementById('btnCloseReceiptModal');
+    if (btnCloseReceiptModal) {
+        btnCloseReceiptModal.addEventListener('click', closeOrderReceiptModal);
+    }
+
+    const btnReceiptContinue = document.getElementById('btnReceiptContinue');
+    if (btnReceiptContinue) {
+        btnReceiptContinue.addEventListener('click', closeOrderReceiptModal);
+    }
+
+    if (orderSuccessModal) {
+        orderSuccessModal.addEventListener('click', (e) => {
+            if (e.target === orderSuccessModal) {
+                closeOrderReceiptModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && orderSuccessModal && orderSuccessModal.style.display !== 'none') {
+            closeOrderReceiptModal();
+        }
+    });
+
     if (btnPrintReceipt) {
         btnPrintReceipt.addEventListener('click', () => {
             window.print();

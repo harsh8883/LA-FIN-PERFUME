@@ -1132,6 +1132,8 @@ button {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .invoice-box {
@@ -1141,10 +1143,40 @@ button {
     width: 100%;
     max-width: 680px;
     max-height: 90vh;
+    max-height: 90dvh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: auto;
     padding: 36px;
+    position: relative;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.btn-inv-close-top {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #444;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.btn-inv-close-top:hover {
+    background: #111;
+    color: #fff;
+    border-color: #111;
 }
 
 .invoice-header {
@@ -1154,6 +1186,7 @@ button {
     padding-bottom: 20px;
     border-bottom: 2px solid #111;
     margin-bottom: 24px;
+    padding-right: 36px;
 }
 
 .invoice-logo {
@@ -1178,10 +1211,17 @@ button {
     font-size: 13px;
 }
 
+.invoice-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 24px;
+}
+
 .invoice-table {
     width: 100%;
+    min-width: 500px;
     border-collapse: collapse;
-    margin-bottom: 24px;
     font-size: 13px;
 }
 
@@ -1332,6 +1372,7 @@ footer .copyright {
     .stepper-track-wrap {
         overflow-x: auto;
         padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
     }
 
     .step-node {
@@ -1345,16 +1386,149 @@ footer .copyright {
 }
 
 @media (max-width: 600px) {
+    .navbar {
+        min-height: 70px;
+        position: relative;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 14px 18px;
+    }
+
+    .logo {
+        font-size: 24px;
+        letter-spacing: 4px;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: 2;
+    }
+
+    .nav-actions {
+        order: 1;
+        margin-left: auto;
+        gap: 10px;
+    }
+
+    .login-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .cart {
+        font-size: 12px;
+    }
+
+    .user-dropdown {
+        right: -10px;
+        width: 240px;
+    }
+
+    .nav-links {
+        display: none;
+        order: 3;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 8px 0;
+        position: static;
+        background: transparent;
+        border-bottom: none;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 12px 0;
+        border-top: 1px solid #333;
+    }
+
     .history-page {
         padding: 24px 5% 60px;
     }
 
     .history-hero h1 {
-        font-size: 28px;
+        font-size: 26px;
+        letter-spacing: 2px;
+    }
+
+    .history-hero .subtitle {
+        font-size: 13px;
     }
 
     .tracking-showcase {
-        padding: 20px;
+        padding: 18px 14px;
+    }
+
+    .tracking-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .order-card-header {
+        padding: 14px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .order-header-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .order-card-body {
+        padding: 16px;
+    }
+
+    .order-item-row {
+        gap: 12px;
+    }
+
+    .invoice-modal-backdrop {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .invoice-box {
+        padding: 20px 16px;
+        margin: 10px auto;
+        max-height: 92vh;
+        max-height: 92dvh;
+        border-radius: 10px;
+    }
+
+    .invoice-header {
+        flex-direction: column;
+        gap: 12px;
+        padding-right: 32px;
+    }
+
+    .invoice-meta {
+        text-align: left;
+    }
+
+    .invoice-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .invoice-totals {
+        width: 100%;
+    }
+
+    .invoice-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .invoice-footer button {
+        width: 100%;
+        padding: 11px 16px;
     }
 }
 

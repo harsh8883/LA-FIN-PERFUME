@@ -918,7 +918,7 @@ const Store = {
         const data = localStorage.getItem(STORAGE_KEYS.LOGIN_LOGS);
         if (!data) {
             const initialLogs = [
-                { id: 1, customerId: 'ADMIN-001', customerName: 'Store Administrator', email: 'admin@lafin.luxury', action: 'Admin System Initialized', timestamp: '2026-11-01 09:00:00', device: 'Desktop System' },
+                { id: 1, customerId: 'ADMIN-001', customerName: 'Store Administrator', email: 'dhamechaharsh1@gmail.com', action: 'Admin System Initialized', timestamp: '2026-11-01 09:00:00', device: 'Desktop System' },
                 { id: 2, customerId: 'CUST-1001', customerName: 'Aarav Sharma', email: 'aarav.sharma@example.com', action: 'Customer Login', timestamp: '2026-11-01 10:15:22', device: 'Chrome / Windows 11' },
                 { id: 3, customerId: 'CUST-1003', customerName: 'Rohan Mehta', email: 'rohan.mehta@example.com', action: 'Customer Login', timestamp: '2026-11-01 08:30:45', device: 'Chrome / Android 14' }
             ];
